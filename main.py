@@ -1,11 +1,9 @@
 from fastapi import FastAPI, HTTPException, status, Body
 from pydantic import BaseModel
 from typing import Optional
+from auth import authenticate_user, create_user
 
 app = FastAPI(title="Summit Banks App")
-
-# Assuming you have a file named auth.py with functions for handling authentication
-# from auth import authenticate_user, create_user, transfer_funds
 
 class SignUpRequest(BaseModel):
     username: str
@@ -26,17 +24,17 @@ class TransferRequest(BaseModel):
 @app.post("/signup", status_code=status.HTTP_201_CREATED)
 async def signup(request: SignUpRequest):
     # Placeholder for user creation logic
-    # result = create_user(request)
-    # if result is None:
-    #     raise HTTPException(status_code=400, detail="Could not create user")
+    result = create_user(request)
+    if result is None:
+        raise HTTPException(status_code=400, detail="Could not create user")
     return {"message": "User created successfully"}
 
 @app.post("/login")
 async def login(request: LoginRequest):
     # Placeholder for user authentication logic
-    # user = authenticate_user(request.username, request.password)
-    # if not user:
-    #     raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Incorrect username or password")
+    user = authenticate_user(request.username, request.password)
+    if not user:
+        raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Incorrect username or password")
     return {"message": "Login successful", "balance": 100.0}  # Example balance
 
 @app.post("/transfer")

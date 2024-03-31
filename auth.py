@@ -7,8 +7,6 @@ users_db: Dict[str, UserDisplay] = {}
 
 def hash_password(password: str) -> str:
     # Placeholder for password hashing
-    # In a real application, use a proper cryptographic hash function
-    # For example, using passlib and bcrypt
     return "hashed_" + password
 
 def verify_password(plain_password: str, hashed_password: str) -> bool:
@@ -28,7 +26,7 @@ def create_user(user: UserCreate) -> UserDisplay:
         first_name=user.first_name,
         last_name=user.last_name,
         balance=user.initial_balance,
-        id=len(users_db) + 1  # Simple way to generate a new ID
+        id=len(users_db) + 1  # Simple way to generate a new ID for now
     )
     users_db[user.username] = user_db_entry
     return user_db_entry
