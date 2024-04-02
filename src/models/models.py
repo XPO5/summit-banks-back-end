@@ -9,7 +9,7 @@ class UserBase(BaseModel):
 
 class UserCreate(UserBase):
     password: str
-    initial_balance: float = Field(..., ge=0, description="Initial deposit must be non-negative")
+    initial_balance: float
 
 class UserDisplay(UserBase):
     id: Optional[int] = None
@@ -21,11 +21,6 @@ class Config:
 class UserLogin(BaseModel):
     username: str
     password: str
-
-class Transfer(BaseModel):
-    from_username: str
-    to_username: str
-    amount: float = Field(..., gt=0, description="Transfer amount must be greater than zero")
 
 class SignUpRequest(BaseModel):
     username: str

@@ -1,6 +1,6 @@
 from fastapi import FastAPI, HTTPException, status, Body
-from src.models.models import LoginRequest, SignUpRequest, TransferRequest
-from src.endpoints import healthcheck
+from src.models.models import LoginRequest, SignUpRequest
+from src.endpoints import healthcheck, transfer
 from typing import Optional
 from src.utils.auth import authenticate_user, create_user
 
@@ -22,14 +22,6 @@ async def login(request: LoginRequest):
         raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Incorrect username or password")
     return {"message": "Login successful", "balance": 100.0}  # Example balance
 
-@app.post("/transfer")
-async def transfer(request: TransferRequest):
-    # Placeholder for funds transfer logic
-    # success = transfer_funds(request.from_username, request.to_username, request.amount)
-    # if not success:
-    #     raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="Transfer failed")
-    return {"message": "Transfer successful"}
-
 @app.patch("/change_user_info")
 async def change_user_info(request: SignUpRequest):
     # Placeholder for user info update logic
@@ -44,3 +36,4 @@ async def metrics():
         return {"metrics": "placeholder"}
 
 app.include_router(healthcheck.router)
+app.include_router(transfer.router)
