@@ -1,25 +1,10 @@
 from fastapi import FastAPI, HTTPException, status, Body
-from pydantic import BaseModel
+from src.models.models import LoginRequest, SignUpRequest, TransferRequest
+from src.endpoints import healthcheck
 from typing import Optional
-from auth import authenticate_user, create_user
+from src.utils.auth import authenticate_user, create_user
 
 app = FastAPI(title="Summit Banks App")
-
-class SignUpRequest(BaseModel):
-    username: str
-    password: str
-    email: str
-    first_name: str
-    last_name: str
-    initial_balance: float
-
-class LoginRequest(BaseModel):
-    username: str
-    password: str
-
-class TransferRequest(BaseModel):
-    to_username: str
-    amount: float
 
 @app.post("/signup", status_code=status.HTTP_201_CREATED)
 async def signup(request: SignUpRequest):
@@ -45,13 +30,17 @@ async def transfer(request: TransferRequest):
     #     raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="Transfer failed")
     return {"message": "Transfer successful"}
 
-@app.get("/healthcheck")
-async def health_check():
-    # Placeholder for health check logic
-    return {"status": "healthy"}
+@app.patch("/change_user_info")
+async def change_user_info(request: SignUpRequest):
+    # Placeholder for user info update logic
+    # success = update_user_info(request.username, request.email, request.first_name, request.last_name)
+    # if not success:
+    #     raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="Update failed")
+    return {"message": "User info updated successfully"}
 
 @app.get("/metrics")
+async def metrics():
+    # Placeholder for metrics retrieval logic
+        return {"metrics": "placeholder"}
 
-if __name__ == "__main__":
-    import uvicorn
-    uvicorn.run(app, host="0.0.0.0", port=8000)
+app.include_router(healthcheck.router)
