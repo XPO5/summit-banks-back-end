@@ -1,4 +1,4 @@
-from models import UserCreate, UserLogin, UserDisplay
+from src.models.models import UserCreate, UserLogin, UserDisplay
 from typing import Dict, Optional
 from fastapi import HTTPException, status
 

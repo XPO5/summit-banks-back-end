@@ -15,8 +15,8 @@ class UserDisplay(UserBase):
     id: Optional[int] = None
     balance: float
 
-    class Config:
-        orm_mode = True
+class Config:
+    orm_mode = True
 
 class UserLogin(BaseModel):
     username: str
@@ -27,8 +27,25 @@ class Transfer(BaseModel):
     to_username: str
     amount: float = Field(..., gt=0, description="Transfer amount must be greater than zero")
 
-# You might also want to define a model for the response of operations
-# For example, a simple operation result that could be used for login, transfer, etc.
+class SignUpRequest(BaseModel):
+    username: str
+    password: str
+    email: str
+    first_name: str
+    last_name: str
+    initial_balance: float
+
+class LoginRequest(BaseModel):
+    username: str
+    password: str
+
+class TransferRequest(BaseModel):
+    to_username: str
+    amount: float
+
+class UpdateInformationRequest(BaseModel):
+    to_update: str
+
 class OperationResult(BaseModel):
     message: str
     details: Optional[str] = None
