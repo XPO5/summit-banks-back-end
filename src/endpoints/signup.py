@@ -4,7 +4,7 @@ from src.utils.utils import addUserIfNotExists
 
 router = APIRouter()
 
-@router.get("/signup")
+@router.post("/signup")
 async def signup(request: SignUpRequest):
     response = addUserIfNotExists(request.username, request.password, request.email, request.first_name, request.last_name, request.initial_balance)
     if response == None:
