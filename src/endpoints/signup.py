@@ -1,5 +1,5 @@
 from fastapi import APIRouter
-from models.models import SignUpRequest
+from src.models.models import SignUpRequest
 from src.utils.utils import addUserIfNotExists
 
 router = APIRouter()
