@@ -7,7 +7,7 @@ load_dotenv()
 class MongoDBConnection:
     def __init__(self, connection_string):
         self.client = pymongo.MongoClient(connection_string)
-        self.db = self.client['djaisp']
+        self.db = self.client['summit-banks']
 
     def get_collection(self, collection_name):
         return self.db[collection_name]
