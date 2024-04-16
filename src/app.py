@@ -1,6 +1,6 @@
 from fastapi import FastAPI, HTTPException, status, Body
 from src.models.models import LoginRequest, SignUpRequest
-from src.endpoints import healthcheck, signup, transfer
+from src.endpoints import healthcheck, signup, transfer, login
 from typing import Optional
 from fastapi.middleware.cors import CORSMiddleware
 
@@ -17,11 +17,6 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-@app.post("/login")
-async def login(request: LoginRequest):
-    # Placeholder for user authentication logic
-    return {"message": "Login successful", "balance": 100.0}  # Example balance
-
 @app.patch("/change_user_info")
 async def change_user_info(request: SignUpRequest):
     # Placeholder for user info update logic
@@ -35,3 +30,5 @@ async def metrics():
 app.include_router(healthcheck.router)
 app.include_router(signup.router)
 app.include_router(transfer.router)
+app.include_router(login.router)
+

@@ -15,9 +15,6 @@ class UserDisplay(UserBase):
     id: Optional[int] = None
     balance: float
 
-class Config:
-    orm_mode = True
-
 class UserLogin(BaseModel):
     username: str
     password: str
